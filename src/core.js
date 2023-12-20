@@ -12,7 +12,6 @@ async function getBrowser() {
     executablePath: await chromium.executablePath(),
     headless: chromium.headless,
   })
-  console.log('browser', browser)
   return browser
 }
 
@@ -21,7 +20,10 @@ const requiredAttributes = ['htmlContent', 's3Path', 's3FilePublic', 's3Region',
 async function createPdfAndUploadToS3({ htmlContent, s3Path, s3FilePublic, s3Region, s3Bucket, s3KeyId, s3SecretKey }) {
   const browser = await getBrowser()
   const page = await browser.newPage()
-  const content = htmlContent.replace(/\\"/g, '"').replace(/\\u003c/g, '<').replace(/\\u003e/g, '>')
+  const content = htmlContent
+    .replace(/\\"/g, '"')
+    .replace(/\\u003c/g, '<')
+    .replace(/\\u003e/g, '>')
   await page.setContent(content)
   await page.emulateMediaType('screen')
   const Body = await page.pdf({

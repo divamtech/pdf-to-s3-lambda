@@ -1,5 +1,5 @@
-const { generateResponse, validateAttributes } = require('./utils/helper')
-const { createPdfAndUploadToS3, requiredAttributes } = require('./utils/core')
+const { generateResponse, validateAttributes } = require('./helper')
+const { createPdfAndUploadToS3, requiredAttributes } = require('./core')
 
 async function main(event) {
   if (!Object.keys(event).length || !event.body) {
@@ -8,12 +8,11 @@ async function main(event) {
 
   const reqBody = JSON.parse(event.body)
   if (!validateAttributes(reqBody, requiredAttributes)) {
-    return generateResponse(400, {message: `Missing attribute, It should contain the following attributes. ${requiredAttributes}` })
+    return generateResponse(400, { message: `Missing attribute, It should contain the following attributes. ${requiredAttributes}` })
   }
 
   const url = await createPdfAndUploadToS3(reqBody)
   const res = await generateResponse(200, { url })
-  console.log(res)
   return res
 }
 
