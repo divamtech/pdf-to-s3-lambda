@@ -17,7 +17,7 @@ async function getBrowser() {
 
 const requiredAttributes = ['htmlContent', 's3Path', 's3FilePublic', 's3Region', 's3Bucket', 's3KeyId', 's3SecretKey']
 // return the uploaded URL
-async function createPdfAndUploadToS3({ htmlContent, s3Path, s3FilePublic, s3Region, s3Bucket, s3KeyId, s3SecretKey }) {
+async function createPdfAndUploadToS3({ htmlContent, s3Path, s3FilePublic, s3Region, s3Bucket, s3KeyId, s3SecretKey }, pageConfig = {}) {
   const browser = await getBrowser()
   const page = await browser.newPage()
   const content = htmlContent
@@ -35,6 +35,7 @@ async function createPdfAndUploadToS3({ htmlContent, s3Path, s3FilePublic, s3Reg
       bottom: 30,
       left: 0,
     },
+    ...pageConfig,
   })
   await browser.close()
 

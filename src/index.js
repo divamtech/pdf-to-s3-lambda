@@ -11,7 +11,7 @@ async function main(event) {
     return generateResponse(400, { message: `Missing attribute, It should contain the following attributes. ${requiredAttributes}` })
   }
 
-  const url = await createPdfAndUploadToS3(reqBody)
+  const url = await createPdfAndUploadToS3(reqBody, reqBody.pageConfig)
   const res = await generateResponse(200, { url })
   return res
 }
