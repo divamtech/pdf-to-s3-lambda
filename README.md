@@ -16,10 +16,11 @@ archive(.zip) the rest of code at `src` folder and upload to lambda function. re
 ```yml
 Handler: index.handler
 Runtime: nodejs20.x
-MemorySize: 1024
+MemorySize: 1024mb
 ```
 
-<img src="./config.png" width="400" />
+<img src="./imgs/config2.png" width="400" />
+<img src="./imgs/config.png" width="400" />
 
 I attached lambda to load balancer, you can attach API gateway.
 
