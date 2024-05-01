@@ -1,15 +1,19 @@
 const AWS = require('aws-sdk')
 const puppeteer = require('puppeteer-core')
 const chromium = require('@sparticuz/chromium')
-const { version } = require('node:process')
 
 chromium.setHeadlessMode = true
 chromium.setGraphicsMode = false
 
+//=> Load custom fonts if necessary (optional).
+//  await chromium.font("https://raw.githack.com/googlei18n/noto-emoji/master/fonts/NotoColorEmoji.ttf");
+
+
 async function getBrowser() {
-  console.log('browser request with node:' + version)
+  console.log('browser request with node:' + chromium.args)
   const browser = await puppeteer.launch({
-    args: chromium.args,
+    args: [...chromium.args, '--disable-webgl', '--disable-gpu'],
+    // dumpio: true,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(),
     headless: chromium.headless,
@@ -22,6 +26,7 @@ const requiredAttributes = ['htmlContent', 's3Path', 's3FilePublic', 's3Region',
 // return the uploaded URL
 async function createPdfAndUploadToS3({ htmlContent, s3Path, s3FilePublic, s3Region, s3Bucket, s3KeyId, s3SecretKey }, pageConfig = {}) {
   const browser = await getBrowser()
+  console.log('browser before page')
   const page = await browser.newPage()
   console.log('browser new page')
   const content = htmlContent

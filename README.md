@@ -4,20 +4,22 @@ create three layers:
 
 ```sh
 npm i aws-sdk@2.1520.0
-npm i @sparticuz/chromium@119.0.0 #find chromium-v119.0.0-layer.zip and download layer directly from link https://github.com/Sparticuz/chromium/releases/tag/v119.0.0
-npm i puppeteer-core@21.5
+npm i @sparticuz/chromium@123.0.0 #find chromium-v123.0.0-layer.zip and download layer directly from link https://github.com/Sparticuz/chromium/releases/tag/v123.0.0
+npm i puppeteer-core@22.6.4
 ```
 
-create a folder called `nodejs` and paste `package.json`, `package-lock.json` and `node_modules` inside this folder. archive this as `aws-sdk.zip`/`puppeteer-core-21.5.zip`.
+create a folder called `nodejs` and paste `package.json`, `package-lock.json` and `node_modules` inside this folder. archive this as `aws-sdk.zip`/`puppeteer-core-22.6.4.zip`.
 upload this archives to `s3` and create layers at lambda.
 
 archive(.zip) the rest of code at `src` folder and upload to lambda function. read the `pdf-to-s3.yaml` for exact lambda config.
 
 ```yml
 Handler: index.handler
-Runtime: nodejs16.x
+Runtime: nodejs20.x
 MemorySize: 1024
 ```
+
+<img src="./config.png" width="400" />
 
 I attached lambda to load balancer, you can attach API gateway.
 
