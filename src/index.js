@@ -6,7 +6,7 @@ async function main(event) {
     return generateResponse(404, { message: 'No content' })
   }
 
-  const reqBody = event.body || JSON.parse(event.body)
+  const reqBody = typeof event.body == 'string' ? JSON.parse(event.body) : event.body
   if (!validateAttributes(reqBody, requiredAttributes)) {
     return generateResponse(400, { message: `Missing attribute, It should contain the following attributes. ${requiredAttributes}` })
   }
